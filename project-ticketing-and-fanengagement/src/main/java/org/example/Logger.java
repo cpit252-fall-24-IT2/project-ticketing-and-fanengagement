@@ -12,13 +12,27 @@ public class Logger {
     // singleton method
     public static Logger getInstance() {
         if (instance == null) {
-            instance = new Logger();
+            synchronized (Logger.class) {
+                if (instance == null) {
+                    instance = new Logger();
+                }
+            }
         }
         return instance;
     }
 
+
     //Method to log messages
     public void log(String message) {
-        System.out.println("LOG: " + message);
+        System.out.println(java.time.LocalDateTime.now() + " INFO: " + message);
     }
+
+    public void logWarning(String message) {
+        System.out.println(java.time.LocalDateTime.now() + " WARNING: " + message);
+    }
+
+    public void logError(String message) {
+        System.err.println(java.time.LocalDateTime.now() + " ERROR: " + message);
+    }
+
 }
