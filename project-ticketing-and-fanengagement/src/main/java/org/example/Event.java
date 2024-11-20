@@ -49,6 +49,7 @@ public class Event {
         return seatNumber >= 1 && seatNumber <= seats.length && !seats[seatNumber - 1];
     }
 
+
     public boolean bookSeat(int seatNumber) {
         if (isSeatAvailable(seatNumber)) {
             seats[seatNumber - 1] = true;
