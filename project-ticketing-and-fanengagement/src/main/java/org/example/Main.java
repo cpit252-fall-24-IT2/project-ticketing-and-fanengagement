@@ -103,7 +103,7 @@ public class Main {
                             }
                         }
                     } else {
-                        System.out.println("Invalid credentials!");
+                        System.out.println("Error in username or password!");
                     }
                 }
                 case 3 -> exit = true;

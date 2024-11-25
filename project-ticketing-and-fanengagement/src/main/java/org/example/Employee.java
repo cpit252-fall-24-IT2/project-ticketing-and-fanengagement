@@ -17,7 +17,6 @@ public class Employee {
         return this.username.equals(inputUsername) && this.password.equals(inputPassword);
     }
 
-    // Add a new event
     public void addEvent(ArrayList<Event> events) {
         Scanner scanner = new Scanner(System.in);
 
@@ -30,11 +29,23 @@ public class Employee {
         System.out.print("Enter event date (YYYY-MM-DD): ");
         String eventDate = scanner.nextLine();
 
-        System.out.print("Enter number of seats: ");
-        int eventSeats = scanner.nextInt();
+        int eventSeats;
+        do {
+            System.out.print("Enter number of seats: ");
+            eventSeats = scanner.nextInt();
+            if (eventSeats <= 0) {
+                System.out.println("Error: Number of seats must be greater than 0.");
+            }
+        } while (eventSeats <= 0);
 
-        System.out.print("Enter ticket price: ");
-        double eventPrice = scanner.nextDouble();
+        double eventPrice;
+        do {
+            System.out.print("Enter ticket price : ");
+            eventPrice = scanner.nextDouble();
+            if (eventPrice <= 0) {
+                System.out.println("Error: Ticket price must be greater than 0.");
+            }
+        } while (eventPrice <= 0);
 
         int newEventId = events.size() + 1;
         Event newEvent = new Event(newEventId, eventLocation, eventDate, eventName, eventSeats, eventPrice);
