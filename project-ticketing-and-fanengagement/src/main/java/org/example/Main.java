@@ -7,8 +7,9 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Event> events = new ArrayList<>();
-        Employee employee = new Employee("saleh", "1234"); // Example credentials
+        Employee employee = new Employee();
         EventManager eventManager = new EventManager();
+
 
         boolean exit = false;
 
@@ -80,25 +81,30 @@ public class Main {
                         }
                     }
                 }
-                case 1 -> {
-                    System.out.print("Enter username: ");
-                    String username = scanner.nextLine();
-                    System.out.print("Enter password: ");
-                    String password = scanner.nextLine();
 
-                    if (employee.authenticate(username, password)) {
-                        boolean employeeExit = false;
+                    case 1 -> {
+                        System.out.print("Enter username: ");
+                        String username = scanner.nextLine(); // Capture username input
+                        System.out.print("Enter password: ");
+                        String password = scanner.nextLine(); // Capture password input
+
+                        // Authenticate the employee
+                        if (employee.authenticate(username, password)) {
+                            System.out.println("Welcome to Ticket System.\nSuccessful login...");
+                            boolean employeeExit = false;
                         while (!employeeExit) {
                             System.out.println("\nEmployee Menu:");
                             System.out.println("1. Add Event");
-                            System.out.println("2. Back to Main Menu");
+                            System.out.println("2. Remove Event"); // New option
+                            System.out.println("3. Back to Main Menu");
                             System.out.print("Enter your choice: ");
                             int employeeChoice = scanner.nextInt();
                             scanner.nextLine();
 
                             switch (employeeChoice) {
                                 case 1 -> employee.addEvent(events);
-                                case 2 -> employeeExit = true;
+                                case 2 -> employee.removeEvent(events, scanner); // New case
+                                case 3 -> employeeExit = true;
                                 default -> System.out.println("Invalid choice!");
                             }
                         }
@@ -106,10 +112,12 @@ public class Main {
                         System.out.println("Error in username or password!");
                     }
                 }
+
                 case 3 -> exit = true;
                 default -> System.out.println("Invalid choice!");
             }
         }
+
 
         System.out.println("Goodbye!");
         System.out.println("Thank you for using the Ticket Booking System!");

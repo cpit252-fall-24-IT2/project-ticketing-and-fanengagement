@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class EventManager {
+    int seatNumber;
     private final Map<Customer, List<Event>> customerBookings = new HashMap<>();
 
     // Book an event for a customer
@@ -33,10 +34,11 @@ public class EventManager {
     }
 
 
-
     // Retrieve all booked events for a customer
     public List<Event> getBookedEvents(Customer customer) {
         return customerBookings.getOrDefault(customer, new ArrayList<>());
     }
+
+
 }
 

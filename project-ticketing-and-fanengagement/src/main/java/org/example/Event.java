@@ -33,6 +33,7 @@ public class Event {
         return name;
     }
 
+
     public double getPrice() {
         return price;
     }
