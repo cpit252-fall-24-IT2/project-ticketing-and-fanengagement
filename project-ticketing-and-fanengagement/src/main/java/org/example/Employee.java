@@ -1,8 +1,10 @@
 package org.example;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Employee {
     private String username;
@@ -35,8 +37,18 @@ public class Employee {
         System.out.print("Enter event location: ");
         String eventLocation = scanner.nextLine();
 
-        System.out.print("Enter event date (YYYY-MM-DD): ");
-        String eventDate = scanner.nextLine();
+        String eventDate;
+        while (true) {
+            System.out.print("Enter event date (YYYY-MM-DD): ");
+            eventDate = scanner.nextLine();
+
+            // Validate the date format and check if it's not in the past
+            if (isValidDate(eventDate)) {
+                break;
+            } else {
+                System.out.println("Invalid date. Please enter a valid future date in the format YYYY-MM-DD.");
+            }
+        }
 
         int eventSeats;
         do {
@@ -63,7 +75,21 @@ public class Employee {
         System.out.println("Event added successfully!");
     }
 
-    public void removeEvent(ArrayList<Event> events, Scanner scanner) {
+    private boolean isValidDate(String dateStr) {
+        try {
+            // Parse the date
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate date = LocalDate.parse(dateStr, formatter);
+
+            // Check if the date is not in the past
+            return !date.isBefore(LocalDate.now());
+        } catch (DateTimeParseException e) {
+            return false; // Invalid date format
+        }
+    }
+
+
+public void removeEvent(ArrayList<Event> events, Scanner scanner) {
         if (events.isEmpty()) {
             System.out.println("No events available to remove.");
             return;

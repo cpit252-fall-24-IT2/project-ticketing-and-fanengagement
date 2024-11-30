@@ -59,7 +59,5 @@ public class Event {
         return false;
     }
 
-    public int getTotalSeats() {
-        return seats.length;
-    }
+
 }

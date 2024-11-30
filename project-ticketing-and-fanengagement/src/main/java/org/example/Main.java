@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -30,6 +31,8 @@ public class Main {
                     String email = scanner.nextLine();
 
                     Customer customer = new Customer(name, email);
+                    List<Product> customerBookings = new ArrayList<>();
+
 
                     boolean customerExit = false;
                     while (!customerExit) {
@@ -69,29 +72,41 @@ public class Main {
 
                                         if (eventManager.bookEvent(customer, selectedEvent, seatNumber)) {
                                             System.out.println("Booking successful!");
+                                            customerBookings.add(new Product(selectedEvent.getName(), selectedEvent.getPrice()));
                                         } else {
                                             System.out.println("Booking failed. Seat may not be available.");
                                         }
+
+
                                     }
                                 }
                             }
                             case 2 -> eventManager.displayCustomerBookings(customer);
-                            case 3 -> customerExit = true;
+                            case 3 -> {
+                                if (!customerBookings.isEmpty()) {
+                                    // Generate and send email receipt
+                                    EmailReceipt receipt = new EmailReceipt("Your Ticket Details", customer.getEmail(), customerBookings);
+                                    receipt.generate();
+                                    System.out.println("A receipt email with your tickets has been sent to " + customer.getEmail());
+                                }
+                                customerExit = true;
+                            }
                             default -> System.out.println("Invalid choice!");
+
                         }
                     }
                 }
 
-                    case 1 -> {
-                        System.out.print("Enter username: ");
-                        String username = scanner.nextLine(); // Capture username input
-                        System.out.print("Enter password: ");
-                        String password = scanner.nextLine(); // Capture password input
+                case 1 -> {
+                    System.out.print("Enter username: ");
+                    String username = scanner.nextLine(); // Capture username input
+                    System.out.print("Enter password: ");
+                    String password = scanner.nextLine(); // Capture password input
 
-                        // Authenticate the employee
-                        if (employee.authenticate(username, password)) {
-                            System.out.println("Welcome to Ticket System.\nSuccessful login...");
-                            boolean employeeExit = false;
+                    // Authenticate the employee
+                    if (employee.authenticate(username, password)) {
+                        System.out.println("Welcome to Ticket System.\nSuccessful login...");
+                        boolean employeeExit = false;
                         while (!employeeExit) {
                             System.out.println("\nEmployee Menu:");
                             System.out.println("1. Add Event");

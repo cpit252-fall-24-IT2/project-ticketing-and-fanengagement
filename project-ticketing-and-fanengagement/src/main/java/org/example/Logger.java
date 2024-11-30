@@ -31,8 +31,6 @@ public class Logger {
         System.out.println(java.time.LocalDateTime.now() + " WARNING: " + message);
     }
 
-    public void logError(String message) {
-        System.err.println(java.time.LocalDateTime.now() + " ERROR: " + message);
-    }
+
 
 }
