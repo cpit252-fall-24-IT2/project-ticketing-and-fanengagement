@@ -1,5 +1,8 @@
 package org.example;
 
+import org.example.Product;
+import org.example.PDFReceipt;
+import org.example.EmailReceipt;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -10,7 +13,6 @@ public class Main {
         ArrayList<Event> events = new ArrayList<>();
         Employee employee = new Employee();
         EventManager eventManager = new EventManager();
-
 
         boolean exit = false;
 
@@ -33,13 +35,13 @@ public class Main {
                     Customer customer = new Customer(name, email);
                     List<Product> customerBookings = new ArrayList<>();
 
-
                     boolean customerExit = false;
                     while (!customerExit) {
                         System.out.println("\nCustomer Menu:");
                         System.out.println("1. Book Event");
                         System.out.println("2. View Bookings");
-                        System.out.println("3. Back to Main Menu");
+                        System.out.println("3. Select Ticket View");
+                        System.out.println("4. Back to Main Menu");
                         System.out.print("Enter your choice: ");
                         int customerChoice = scanner.nextInt();
                         scanner.nextLine();
@@ -76,32 +78,49 @@ public class Main {
                                         } else {
                                             System.out.println("Booking failed. Seat may not be available.");
                                         }
-
-
                                     }
                                 }
                             }
                             case 2 -> eventManager.displayCustomerBookings(customer);
                             case 3 -> {
-                                if (!customerBookings.isEmpty()) {
-                                    // Generate and send email receipt
-                                    EmailReceipt receipt = new EmailReceipt("Your Ticket Details", customer.getEmail(), customerBookings);
-                                    receipt.generate();
-                                    System.out.println("A receipt email with your tickets has been sent to " + customer.getEmail());
+                                // Check if the customer has bookings
+                                if (customerBookings.isEmpty()) {
+                                    System.out.println("You need to make a reservation first before selecting a ticket view.");
+                                } else {
+                                    // Allow customer to select how they want to view their ticket
+                                    System.out.println("\nTicket View Options:");
+                                    System.out.println("1. View via Email");
+                                    System.out.println("2. View as PDF");
+                                    System.out.print("Enter your choice: ");
+                                    int ticketChoice = scanner.nextInt();
+                                    scanner.nextLine(); // Consume the newline character
+
+                                    if (ticketChoice == 1) {
+                                        // Generate and send email receipt
+                                        EmailReceipt receipt = new EmailReceipt("Your Ticket Details", customer.getEmail(), customerBookings);
+                                        receipt.generate();
+                                    } else if (ticketChoice == 2) {
+                                        // Generate PDF receipt
+                                        String path = "Receipt_" + customer.getName() + ".pdf"; // Customize file path
+                                        PDFReceipt pdfReceipt = new PDFReceipt("Your Event Receipt", path, customerBookings);
+                                        pdfReceipt.generate();
+                                    } else {
+                                        System.out.println("Invalid choice! Please select 1 or 2.");
+                                    }
                                 }
                                 customerExit = true;
                             }
+                            case 4 -> customerExit = true;
                             default -> System.out.println("Invalid choice!");
-
                         }
                     }
                 }
 
                 case 1 -> {
                     System.out.print("Enter username: ");
-                    String username = scanner.nextLine(); // Capture username input
+                    String username = scanner.nextLine();
                     System.out.print("Enter password: ");
-                    String password = scanner.nextLine(); // Capture password input
+                    String password = scanner.nextLine();
 
                     // Authenticate the employee
                     if (employee.authenticate(username, password)) {
@@ -110,7 +129,7 @@ public class Main {
                         while (!employeeExit) {
                             System.out.println("\nEmployee Menu:");
                             System.out.println("1. Add Event");
-                            System.out.println("2. Remove Event"); // New option
+                            System.out.println("2. Remove Event");
                             System.out.println("3. Back to Main Menu");
                             System.out.print("Enter your choice: ");
                             int employeeChoice = scanner.nextInt();
@@ -118,7 +137,7 @@ public class Main {
 
                             switch (employeeChoice) {
                                 case 1 -> employee.addEvent(events);
-                                case 2 -> employee.removeEvent(events, scanner); // New case
+                                case 2 -> employee.removeEvent(events, scanner);
                                 case 3 -> employeeExit = true;
                                 default -> System.out.println("Invalid choice!");
                             }
@@ -132,7 +151,6 @@ public class Main {
                 default -> System.out.println("Invalid choice!");
             }
         }
-
 
         System.out.println("Goodbye!");
         System.out.println("Thank you for using the Ticket Booking System!");

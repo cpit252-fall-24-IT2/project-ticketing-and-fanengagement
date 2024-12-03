@@ -1,7 +1,5 @@
 package org.example;
 
-import org.example.Product;
-import org.example.SendEmail;
 
 import java.util.List;
 
