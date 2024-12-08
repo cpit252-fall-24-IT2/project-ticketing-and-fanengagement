@@ -31,14 +31,14 @@ The Ticketing and Fan Engagement System is a Java-based application designed to 
 
 #### Main Menu
 
-![Main Menu Screenshot](screenshots/Main-menu.png)
+![Main Menu Screenshot](project-ticketing-and-fanengagement/screenshots/Main-menu.png)
 
 #### OutPut
 
-![OutPut](screenshots/output.png)
+![OutPut](project-ticketing-and-fanengagement/screenshots/output.png)
 
 #### Unit Test
-![Unit Test Screenshot](screenshots/Unit-test.png)
+![Unit Test Screenshot](project-ticketing-and-fanengagement/screenshots/Unit-test.png)
 
 
 ## Technologies Used
