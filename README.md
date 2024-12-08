@@ -51,3 +51,4 @@ Enter event date (YYYY-MM-DD): 2024-12-15
 Enter number of seats : 50
 Enter ticket price: 120
 Event added successfully!
+
