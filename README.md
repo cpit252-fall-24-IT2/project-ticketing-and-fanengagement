@@ -52,8 +52,3 @@ Enter number of seats : 50
 Enter ticket price: 120
 Event added successfully!
 
----
-
-## Screenshots
-
-![Ticketing and fan engagement Demo](https://github.com/user-attachments/assets/44228fb0-776c-4e6a-9de2-ae165914c13e)
